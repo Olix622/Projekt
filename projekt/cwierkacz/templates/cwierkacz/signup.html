@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja</title>
+</head>
+<body>
+<img src="https://cdn.discordapp.com/attachments/1110236567441784923/1114477917674672138/1.png" width="300" height="160" alt="Logo">
+
+<h3>Rejestracja</h3>
+
+<form action="/rejestracja" method="post">
+    {% csrf_token %}
+    <label for="">Nazwa użytwkonika</label>
+    <input type="text" id="nazwa_uzytkownika" name="nazwa_uzytkownika" placeholder="Stwórz nazwę użytkownika " required>
+    <br>
+    <br>
+    <label for="">E-mail</label>
+    <input type="email" id="email" name="email" placeholder="Podaj e-mail " required>
+    <br>
+    <br>
+    <label for="">Imie</label>
+    <input type="text" id="imie" name="imie" placeholder="Podaj imie " required>
+    <br>
+    <br>
+    <label for="">Nazwisko</label>
+    <input type="text" id="nazwisko" name="nazwisko" placeholder="Podaj nazwisko " required>
+    <br>
+    <br>
+    <label for="">Hasło</label>
+    <input type="password" id="password1" name="password1" placeholder="Stwórz hasło " required>
+    <br>
+    <br>
+    <label for="">Potwierdź hasło</label>
+    <input type="password" id="password2" name="password2" placeholder="Powtórz hasło " required>
+    <br>
+    <br>
+    <button type="submit">Zaloguj się</button>
+</form>
+</body>
+</html>
