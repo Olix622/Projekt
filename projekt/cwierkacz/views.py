@@ -40,7 +40,7 @@ def signup(request):
 
 def signin(request):
     if request.method == 'POST':
-        nazwa_uzytkownika = request.POST['login']
+        nazwa_uzytkownika = request.POST['nazwa_uzytkownika']
         password1 = request.POST['password1']
 
         user = authenticate(login=nazwa_uzytkownika, password=password1)
@@ -52,11 +52,11 @@ def signin(request):
 
         else:
             messages.error(request, "Nieprawidłowe dane")
-            return redirect('home')
+            return redirect('posty')
     return render(request, 'cwierkacz/signin.html')
 
 
 def signout(request):
     logout(request)
     messages.success(request, "Wylogowany")
-    return redirect('home')
+    return redirect('index')

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.tittle }}</title>
+</head>
+<body>
+<h2><a>{{ post.title }}</a></h2>
+<hr> {{post.content|truncatewords:40|linebreaks}}
+<p>_____________________________________________________________________</p>
+<p>Data opublikowania: {{ post.published }}</p>
+
+</body>
+</html>

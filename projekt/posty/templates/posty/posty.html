@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ĆWIERKACZ</title>
+</head>
+<body>
+{% for posts in post %}
+<h2><a href="{{posts.get_absolute_url}}">{{ posts.title }}</a></h2>
+<p>Data opublikowania: {{posts.published}}</p>
+<hr> {{post.content|truncatewords:40|linebreaks}}
+{%endfor%}
+</body>
+</html>

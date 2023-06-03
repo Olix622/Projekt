@@ -19,9 +19,11 @@ from django.urls import path, include
 from cwierkacz import views
 
 
-
 urlpatterns = [
   path('admin/', admin.site.urls),
   path('', include('cwierkacz.urls')),
+  path('', views.home, name='index'),
+  path('', include('posty.urls')),
   path('logowanie', views.signin, name='logowanie'),
+  path('wylogowanie', views.signout, name='wylogowanie'),
 ]
