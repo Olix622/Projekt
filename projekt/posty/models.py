@@ -13,8 +13,6 @@ class Post(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250)
     content = models.TextField()
-    seo_title = models.CharField(max_length=250)
-    seo_description = models.CharField(max_length=250)
     published = models.DateTimeField(default=timezone.now())
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

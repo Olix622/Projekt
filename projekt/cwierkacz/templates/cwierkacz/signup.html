@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Rejestracja</title>
+    {% load static %}
+    <link href="{% static 'css/common.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
 </head>
 <body>
 <img src="https://cdn.discordapp.com/attachments/1110236567441784923/1114477917674672138/1.png" width="300" height="160" alt="Logo">
 
 <h3>Rejestracja</h3>
-
 <form action="/rejestracja" method="post">
     {% csrf_token %}
-    <label for="">Nazwa użytwkonika</label>
+    <label for="">Nazwa użytwkownika</label>
     <input type="text" id="nazwa_uzytkownika" name="nazwa_uzytkownika" placeholder="Stwórz nazwę użytkownika " required>
     <br>
     <br>
@@ -35,7 +37,7 @@
     <input type="password" id="password2" name="password2" placeholder="Powtórz hasło " required>
     <br>
     <br>
-    <button type="submit" >Zaloguj się</button>
+    <button type="submit" class="btn">Zaloguj się</button>
 </form>
 </body>
 </html>

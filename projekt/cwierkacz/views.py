@@ -4,12 +4,6 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 
-# def hello(request):
-#     return HttpResponse('Hello, world!')
-
-# class HelloView(TemplateView):
-#     template_name = 'cwierkacz/hello.html'
-
 
 def home(request):
     return render(request, 'cwierkacz/index.html')

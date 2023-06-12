@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Zalogowany</title>
+    {% load static %}
+    <link href="{% static 'css/common.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
 </head>
 <body>
 <img src="https://cdn.discordapp.com/attachments/1110236567441784923/1114477874292985866/Website-image.webp" width="270" height="160" alt="Logo">
@@ -19,6 +22,6 @@
     <input type="password" id="password1" name="password1" placeholder="Podaj hasło " required>
     <br>
     <br>
-    <button type="submit">Logowanie</button>
+    <button type="submit" class="btn">Logowanie</button>
 </body>
 </html>

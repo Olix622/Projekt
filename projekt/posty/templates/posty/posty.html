@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>ĆWIERKACZ</title>
+    {% load static %}
+    <link href="{% static 'css/common.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
 </head>
 <body>
+<button type="submit" class="btn"><a href="/wylogowanie">Wyloguj się</a></button>
+<button type="submit" class="btn"><a href="/posty/create">Stwórz post</a></button>
+<br>
+<br>
 {% for posts in post %}
 <h2><a href="{{posts.get_absolute_url}}">{{ posts.title }}</a></h2>
 <p>Data opublikowania: {{posts.published}}</p>
