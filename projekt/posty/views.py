@@ -28,8 +28,8 @@ def post_detail(request, slug):
 
 class BlogSearchView(ListView):
     model = Post
-    template_name = 'blog.html'
-    context_object_name = 'posts'
+    template_name = 'posty/posty.html'
+    # context_object_name = 'posts'
 
     def get_queryset(self):
         query = self.request.GET.get('q')
