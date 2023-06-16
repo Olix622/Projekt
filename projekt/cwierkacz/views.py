@@ -1,56 +1,60 @@
-# from django.views.generic import TemplateView
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login, logout
+from django.views import View
+from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 
 
 def home(request):
     return render(request, 'cwierkacz/index.html')
 
 
-def signup(request):
+class RegisterView(View):
+    form_class = RegisterForm
+    initial = {'key': 'value'}
+    template_name = 'cwierkacz/signup.html'
 
-    if request.method == "POST":
-        nazwa_uzytkownika = request.POST['nazwa_uzytkownika']
-        email = request.POST['email']
-        imie = request.POST['imie']
-        nazwisko = request.POST['nazwisko']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
 
-        myuser = User.objects.create_user(nazwa_uzytkownika, email, password1)
-        myuser.imie = imie
-        myuser.nazwisko = nazwisko
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
 
-        myuser.save()
+        if form.is_valid():
+            form.save()
 
-        messages.success(request, "Rejestracja zakończona sukcesem")
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}')
 
-        return redirect("logowanie")
+            return redirect("cwierkacz/signin.html")
 
-    return render(request, 'cwierkacz/signup.html')
-
-
-def signin(request):
-    if request.method == 'POST':
-        nazwa_uzytkownika = request.POST['nazwa_uzytkownika']
-        password1 = request.POST['password1']
-
-        user = authenticate(login=nazwa_uzytkownika, password=password1)
-
-        if user is not None:
-            login(request, user)
-            imie = user.imie
-            return redirect(request, "cwierkacz/index.html", {'imie': imie})
-
-        else:
-            messages.error(request, "Nieprawidłowe dane")
-            return redirect('posty')
-    return render(request, 'cwierkacz/signin.html')
+        return render(request, self.template_name, {'form': form})
 
 
-def signout(request):
-    logout(request)
-    messages.success(request, "Wylogowany")
-    return redirect('index')
+class CustomLoginView(LoginView):
+    form_class = LoginForm
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data.get('remember_me')
+
+        if not remember_me:
+            self.request.session.set_expiry(0)
+
+            self.request.session.modified = True
+
+        return super(CustomLoginView, self).form_valid(form)
+
+
+
+
+def dispatch(self, request, *args, **kwargs):
+    if request.user.is_authenticated:
+        return redirect(to='logowanie')
+
+    return super(RegisterView, self).dispatch(request, *args, **kwargs)
+
+@login_required
+def profile(request):
+    return render(request, 'cwierkacz/user_profile.html', {'user_form': user_form, 'profile_form': profile_form})

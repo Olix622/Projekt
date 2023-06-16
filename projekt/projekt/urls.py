@@ -17,13 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from cwierkacz import views
-
+from cwierkacz.views import CustomLoginView, RegisterView
+from django.contrib.auth import views as auth_views
+from cwierkacz.forms import LoginForm
+from cwierkacz.views import profile
 
 urlpatterns = [
   path('admin/', admin.site.urls),
   path('', include('cwierkacz.urls')),
   path('', views.home, name='index'),
   path('', include('posty.urls')),
-  path('logowanie', views.signin, name='logowanie'),
-  path('wylogowanie', views.signout, name='wylogowanie'),
+  path('rejestracja', RegisterView.as_view(), name='rejestracja'),
+  path('logowanie', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='cwierkacz/signin.html',
+                                           authentication_form=LoginForm),  name='logowanie'),
+  path('wylogowanie', auth_views.LogoutView.as_view(template_name='cwierkacz/logout.html'), name='wylogowanie'),
+  path('profil/', profile, name='profil')
 ]

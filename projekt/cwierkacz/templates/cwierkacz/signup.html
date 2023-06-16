@@ -1,43 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rejestracja</title>
-    {% load static %}
+{% extends "cwierkacz/base.html" %}
+{% block title %} Rejestracja {% endblock title%}
+{% block content %}
+{% load static %}
     <link href="{% static 'css/tlo.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
-</head>
-<body>
-<img src="https://cdn.discordapp.com/attachments/1110236567441784923/1114477917674672138/1.png" width="300" height="160" alt="Logo">
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />    <div class="form-content my-3 p-3">
+		<div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="card shadow-lg border-0 rounded-lg mt-0 mb-5">
+                        <div class="card-header justify-content-center">
+                        	<h3 class="font-weight-light my-4 text-center">Stwórz konto</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <div id="form_errors">
+                                            {% for key, value in form.errors.items %}
+                                                <strong>{{ value }}</strong>
+                                            {% endfor %}
+                                        </div>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="small mb-1">Imię</label>
+                                            {{ form.first_name }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="small mb-1">Nazwisko</label>
+                                            {{ form.last_name }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+		                                <div class="form-group">
+		                                	<label class="small mb-1">Nazwa użytkownika</label>
+		                                    {{ form.username }}
+		                                </div>
+		                            </div>
+                                    <div class="col-md-6">
+		                                <div class="form-group">
+		                                	<label class="small mb-1">Email</label>
+		                                    {{ form.email }}
+		                                </div>
+		                            </div>
+		                        </div>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="small mb-1">Hasło</label>
+                                            {{ form.password1 }}
+                                            {{ form.errors.password }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
 
-<h3>Rejestracja</h3>
-<form action="/rejestracja" method="post">
-    {% csrf_token %}
-    <label for="">Nazwa użytwkownika</label>
-    <input type="text" id="nazwa_uzytkownika" name="nazwa_uzytkownika" placeholder="Stwórz nazwę użytkownika " required>
-    <br>
-    <br>
-    <label for="">E-mail</label>
-    <input type="email" id="email" name="email" placeholder="Podaj e-mail " required>
-    <br>
-    <br>
-    <label for="">Imie</label>
-    <input type="text" id="imie" name="imie" placeholder="Podaj imie " required>
-    <br>
-    <br>
-    <label for="">Nazwisko</label>
-    <input type="text" id="nazwisko" name="nazwisko" placeholder="Podaj nazwisko " required>
-    <br>
-    <br>
-    <label for="">Hasło</label>
-    <input type="password" id="password1" name="password1" placeholder="Stwórz hasło " required>
-    <br>
-    <br>
-    <label for="">Potwierdź hasło</label>
-    <input type="password" id="password2" name="password2" placeholder="Powtórz hasło " required>
-    <br>
-    <br>
-    <button type="submit" class="btn">Zaloguj się</button>
-</form>
-</body>
-</html>
+                                        <div class="form-group">
+                                            <label class="small mb-1">Potwierdź hasło</label>
+                                            {{ form.password2 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4 mb-0">
+                                    <button type="submit" class="col-md-12 btn btn-dark">Zaloguj się</button><br><br>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer text-center">
+                            <div class="small">
+                                <a href="{% url 'logowanie' %}">Jeśli masz konto zaloguj się</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+{% endblock content %}

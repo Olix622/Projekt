@@ -1,7 +1,8 @@
+from PIL import Image
 from django.db import models
-from django.db.models import Model, CharField, TextField
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Post(models.Model):
@@ -24,10 +25,21 @@ class Post(models.Model):
         return self.title
 
 
-class Profil(Model):
-    nazwa_uzytkownika = CharField(max_length=128)
-    haslo = CharField(max_length=128)
-    imie = CharField(max_length=128)
-    nazwisko = CharField(max_length=128)
-    miejsce_zamieszkania = CharField(max_length=128)
-    opis = TextField()
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    bio = models.TextField()
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)

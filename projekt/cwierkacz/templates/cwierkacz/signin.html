@@ -1,27 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Zalogowany</title>
-    {% load static %}
+{% extends "cwierkacz/base.html" %}
+{% block title %} Strona logowania {% endblock title%}
+{% block content %}
+{% load static %}
     <link href="{% static 'css/tlo.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
-</head>
-<body>
-<img src="https://cdn.discordapp.com/attachments/1110236567441784923/1114477874292985866/Website-image.webp" width="270" height="160" alt="Logo">
-
-<h3>Zaloguj się</h3>
-
-<form action="/logowanie" method="post">
-    {% csrf_token %}
-    <label for="">Nazwa_użytkownika</label>
-    <input type="text" id="nazwa_uzytkownika" name="nazwa_uzytkownika" placeholder="Podaj nazwę użytkownika " required>
-    <br>
-    <br>
-    <label for="">Hasło</label>
-    <input type="password" id="password1" name="password1" placeholder="Podaj hasło " required>
-    <br>
-    <br>
-    <button type="submit" class="btn">Logowanie</button>
-</body>
-</html>
+    <div class="form-content my-3 p-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+                        <div class="card-header justify-content-center">
+                          <h3 class="font-weight-light my-1 text-center">Zaloguj się</h3>
+                        </div>
+                        {% if form.errors %}
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <div id="form_errors">
+                                    {% for key, value in form.errors.items %}
+                                        <strong>{{ value }}</strong>
+                                    {% endfor %}
+                                </div>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group">
+                                            <label class="small mb-1">Nazwa użytkownika</label>
+                                            {{ form.username }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group">
+                                          <label class="small mb-1">Hasło</label>
+                                          {{ form.password }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group">
+                                            <!-- Add a Remember me functionality -->
+                                            {{ form.remember_me }}
+                                            <label> Zapamiętaj</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group mt-0 mb-1">
+                                          <button name="login" class="col-md-12 btn btn-dark" id="login">Zaloguj się</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <a href="{% url 'rejestracja' %}">Nie masz jeszcze konta - zarejestruj się</a><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+{% endblock content %}
