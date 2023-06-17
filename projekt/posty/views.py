@@ -30,19 +30,14 @@ def post_detail(request, slug):
 class BlogSearchView(ListView):
     model = Post
     template_name = 'posty/searchbar.html'
-    # context_object_name = 'posts'
+    context_object_name = 'posts'
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        return Post.objects.filter(title__icontains=query)
-
-# def wyszukaj(request):
-#     if request.method == 'GET':
-#         query = request.GET.get('q')
-#         post = Post.objects.filter(title__icontains=query)
-#         template = 'posty/posty.html'
-#         context = {'post': post}
-#         return render(request, template, context)
+        if query:
+            return Post.objects.filter(title__icontains=query)
+        else:
+            return Post.objects.all()
 class PostCreateView(CreateView):
     template_name = 'posty/post_create.html'
     model = Post
