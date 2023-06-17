@@ -26,9 +26,9 @@ class RegisterView(View):
             form.save()
 
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}')
+            messages.success(request, f'Konto: {username}')
 
-            return redirect("cwierkacz/signin.html")
+            return redirect("logowanie")
 
         return render(request, self.template_name, {'form': form})
 
@@ -47,14 +47,13 @@ class CustomLoginView(LoginView):
         return super(CustomLoginView, self).form_valid(form)
 
 
-
-
 def dispatch(self, request, *args, **kwargs):
     if request.user.is_authenticated:
         return redirect(to='logowanie')
 
     return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
+
 @login_required
 def profile(request):
-    return render(request, 'cwierkacz/user_profile.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(request, 'cwierkacz/user_profile.html')

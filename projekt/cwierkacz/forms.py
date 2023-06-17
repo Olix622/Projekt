@@ -1,10 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.db.transaction import atomic
+
 from posty.models import Profile
 
 class RegisterForm(UserCreationForm):
-    # fields we want to include and customize in our form
+
     first_name = forms.CharField(max_length=100,
                                  required=True,
                                  widget=forms.TextInput(attrs={'placeholder': 'First Name',
@@ -56,13 +58,17 @@ class LoginForm(AuthenticationForm):
                                                                  'class': 'form-control',
                                                                  'data-toggle': 'password',
                                                                  'id': 'password',
-                                                                 'name': 'password',
-                                                                 }))
+                                                                 'name': 'password',}))
     remember_me = forms.BooleanField(required=False)
 
     class Meta:
         model = User
         fields = ['username', 'password', 'remember_me']
+
+    @atomic
+    def save(self, commit=True):
+        result = super().save(commit)
+        return result
 
 
 class UpdateUserForm(forms.ModelForm):

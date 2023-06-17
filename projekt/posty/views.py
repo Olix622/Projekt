@@ -34,7 +34,7 @@ class BlogSearchView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        return Post.objects.filter(title__icontains=query).order_by('-created_at')
+        return Post.objects.filter(title__icontains=query)
 
 # def wyszukaj(request):
 #     if request.method == 'GET':

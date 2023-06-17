@@ -12,8 +12,6 @@ urlpatterns = [
     # path('', views.HelloView.as_view(), name='hello'),
     path('', views.home, name='index'),
     path('rejestracja', RegisterView.as_view(), name='rejestracja'),
-    path('logowanie', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='cwierkacz/signin.html',
-                                           authentication_form=LoginForm),  name='logowanie'),
-    path('wylogowanie', auth_views.LogoutView.as_view(template_name='cwierkacz/logout.html'), name='wylogowanie'),
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('logowanie', CustomLoginView.as_view(template_name='cwierkacz/signin.html'), name='logowanie'),
+    path('wylogowanie', auth_views.LogoutView.as_view(template_name='cwierkacz/logout.html'), name='wylogowanie')
+]
